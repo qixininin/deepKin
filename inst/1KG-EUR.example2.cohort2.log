@@ -1,0 +1,26 @@
+PLINK v2.00a6 64-bit (5 Jan 2024)
+Options in effect:
+  --bfile 1KG-EUR.example2.cohort2
+  --make-bed
+  --out 1KG-EUR.example2.cohort2
+  --update-ids new-cohort2.ind
+
+Hostname: Qixins-MacBook-Air.local
+Working directory: /Users/zqx/ZJU-PhD/2-Work/Rpackage/deepKin/inst
+Start time: Mon Jan 15 15:12:13 2024
+
+Random number seed: 1705293733
+8192 MiB RAM detected; reserving 4096 MiB for main workspace.
+Using up to 8 compute threads.
+Warning: --make-bed input and output filenames match.  Appending '~' to input
+filenames.
+127 samples (0 females, 0 males, 127 ambiguous; 127 founders) loaded from
+1KG-EUR.example2.cohort2.fam~.
+7877 variants loaded from 1KG-EUR.example2.cohort2.bim~.
+Note: No phenotype data present.
+--update-ids: 127 samples updated.
+Writing 1KG-EUR.example2.cohort2.fam ... done.
+Writing 1KG-EUR.example2.cohort2.bim ... done.
+Writing 1KG-EUR.example2.cohort2.bed ... done.
+
+End time: Mon Jan 15 15:12:13 2024

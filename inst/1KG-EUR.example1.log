@@ -1,0 +1,24 @@
+PLINK v2.00a6 64-bit (5 Jan 2024)
+Options in effect:
+  --bfile ./inst/1KG-EUR.example1
+  --make-rel triangle bin4
+  --out ./inst/1KG-EUR.example1
+  --silent
+
+Hostname: Qixins-MacBook-Air.local
+Working directory: /Users/zqx/ZJU-PhD/2-Work/Rpackage/deepKin
+Start time: Mon Jan 15 15:42:04 2024
+
+Random number seed: 1705295524
+8192 MiB RAM detected; reserving 4096 MiB for main workspace.
+Using up to 8 compute threads.
+206 samples (0 females, 0 males, 206 ambiguous; 206 founders) loaded from
+./inst/1KG-EUR.example1.fam.
+7877 variants loaded from ./inst/1KG-EUR.example1.bim.
+Note: No phenotype data present.
+Calculating allele frequencies... done.
+Constructing GRM: done.
+--make-rel: GRM written to ./inst/1KG-EUR.example1.rel.bin , and IDs to
+./inst/1KG-EUR.example1.rel.id .
+
+End time: Mon Jan 15 15:42:04 2024
