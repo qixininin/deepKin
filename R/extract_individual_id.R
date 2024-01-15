@@ -16,6 +16,7 @@ extract_individual_id <- function(id, index, xcohort, pop_size1 = NULL, pop_size
   pop_size = length(id)
 
   if(!xcohort){
+
     base = c(1, cumsum(1:(pop_size-1)) + 1)
     row = findInterval(index, base)
     col = index-base[row]+1
@@ -25,12 +26,10 @@ extract_individual_id <- function(id, index, xcohort, pop_size1 = NULL, pop_size
   } else {
     id1 = id[1:pop_size1]
     id2 = id[(pop_size1+1):pop_size]
-
     row = index %% pop_size1
     col = index %/% pop_size1 + 1
     col[which(row==0)]=index[which(row==0)]/pop_size1
     row[which(row==0)]=pop_size1
-
 
     return(data.frame(ID1=id1[row],ID2=id2[col]))
   }

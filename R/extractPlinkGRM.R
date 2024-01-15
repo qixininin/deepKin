@@ -40,7 +40,6 @@ extractPlinkGRM <- function(bfileprefix, xcohort = F, pop_size, pop_size2){
     }
     n = pop_size + pop_size2
     grm = readBin(paste0(bfileprefix,".rel.bin"), what="numeric", n=n*(n+1)/2, size=4)
-
     # base index for each column, totaling n+1 column
     base = c(1, cumsum(1:n) + 1)
     # fetch index for diag and n1-by-n2 individuals
@@ -52,6 +51,7 @@ extractPlinkGRM <- function(bfileprefix, xcohort = F, pop_size, pop_size2){
     }
 
     return(list(diag = grm[index.diag], tri = grm[index.tri]))
+
   }
 
 }

@@ -39,6 +39,7 @@ deepKin_estimation <- function(grm.diag, grm.tri, xcohort = F, me, pop_size1, po
       for(i in 1:pop_size1){
         a = a + 1
         KINGX[a,1] = 1-(grm.diag1[i]+grm.diag2[j])/2+grm.tri[a]
+
       }
     }
   }
