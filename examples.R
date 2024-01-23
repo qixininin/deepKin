@@ -14,7 +14,7 @@ n = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".fam"), inter
 m = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".bim"), intern = T))
 id = read.table(file = paste0(bfileprefix,".fam"), header = F)[,1]
 npairs = n*(n-1)/2
-degree = 1:5
+degree = 0:5
 theta = (1/2)^degree
 minMe = minMe(theta = theta, alpha = 0.05/npairs, beta = 0.1)
 
