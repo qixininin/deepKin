@@ -25,8 +25,6 @@ minMe = minMe(theta = (1/2)^(0:4), alpha = 0.05/npairs, beta = 0.1)
 deepDegree = log(deepTheta(me = me, alpha = 0.05/npairs, beta = 0.1), base = 1/2)
 thrd = -logpThreshold(me = me, (1/2)^seq(0,floor(deepDegree)), beta = 0.1)
 
-
-
 #### Example One: one cohort ---------------------------------------------------
 #### ++ Prepare ----------------------------------------------------------------
 plink_path = "/Users/zqx/Downloads/plink2"
