@@ -12,6 +12,7 @@
 #'
 #' @examples logpThreshold(me = 5000, theta = 0.5, beta = 0.1)
 logpThreshold <- function(me, theta, beta){
-  logalpha = pnorm(sqrt(me/2)*theta-qnorm(1-beta), lower.tail = FALSE, log.p = TRUE) / log(10)
+  # logalpha = pnorm(sqrt(me/2)*theta-qnorm(1-beta), lower.tail = FALSE, log.p = TRUE) / log(10) # approximation
+  logalpha = pnorm((sqrt(me/2)+qnorm(1-beta))*theta-qnorm(1-beta), lower.tail = FALSE, log.p = TRUE) / log(10)
   return(logalpha)
 }

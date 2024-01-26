@@ -1,6 +1,32 @@
 install.packages("/Users/zqx/ZJU-PhD/2-Work/Rpackage/deepKin_0.1.0.tar.gz", repos = NULL, type = "source")
 library(deepKin)
 
+
+#### Simple examples -----------------------------------------------------------
+## UKB Chinese
+n = 1435
+me = 38948.2
+
+## Maize
+n = 207
+me = 19995.37
+
+## Wheat
+n = 811
+me = 281.86
+
+## Cattle
+n = 1490
+me = 242.73
+
+
+npairs = n*(n-1)/2
+minMe = minMe(theta = (1/2)^(0:4), alpha = 0.05/npairs, beta = 0.1)
+deepDegree = log(deepTheta(me = me, alpha = 0.05/npairs, beta = 0.1), base = 1/2)
+thrd = -logpThreshold(me = me, (1/2)^seq(0,floor(deepDegree)), beta = 0.1)
+
+
+
 #### Example One: one cohort ---------------------------------------------------
 #### ++ Prepare ----------------------------------------------------------------
 plink_path = "/Users/zqx/Downloads/plink2"

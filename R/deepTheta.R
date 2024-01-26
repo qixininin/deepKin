@@ -11,6 +11,7 @@
 #'
 #' @examples deepTheta(me = 5000, alpha = 0.05, beta = 0.1)
 deepTheta <- function(me, alpha, beta){
-  deepTheta = sqrt( 2/me ) * (qnorm(1-alpha) + qnorm(1-beta))
+  # deepTheta = sqrt( 2/me ) * (qnorm(1-alpha) + qnorm(1-beta)) # approximation
+  deepTheta = (qnorm(1-alpha) + qnorm(1-beta))/(sqrt( me/2 ) + qnorm(1-beta))
   return(deepTheta)
 }
