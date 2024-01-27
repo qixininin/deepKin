@@ -3,13 +3,13 @@ library(deepKin)
 
 
 #### Simple examples -----------------------------------------------------------
+## UKB british white
+n = 427287
+me = 56945
+
 ## UKB Chinese
 n = 1435
 me = 38948.2
-
-## Maize
-n = 207
-me = 19995.37
 
 ## Wheat
 n = 811
