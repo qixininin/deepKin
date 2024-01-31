@@ -14,10 +14,10 @@ library(deepKin)
 
 
 ## Simple examples - to illustrate three principles
-As long as we get the knowledge of the sample size and the number of effective markers, we offered three functions to calculate the three principles, including:
-I) The minimum number of effective markers is required for detecting the target degree of relatives from unrelated pairs, and it is of economic utility to minimize a budget or industrial application.
-II) The deepest relatedness that the data would support to be detected from unrelated pairs, it characterizes the full potential of a given dataset.
-III) Given the target degree of relatedness, how much of the Type I error rate could be compromised, which is also a significant threshold for relative quality control.
+As long as we get the knowledge of the sample size and the number of effective markers, we offered three functions to calculate the three principles, including:    
+I) The minimum number of effective markers is required for detecting the target degree of relatives from unrelated pairs, and it is of economic utility to minimize a budget or industrial application.    
+II) The deepest relatedness that the data would support to be detected from unrelated pairs, it characterizes the full potential of a given dataset.    
+III) Given the target degree of relatedness, how much of the Type I error rate could be compromised, which is also a significant threshold for relative quality control.     
 
 ```
 #### Simple examples -----------------------------------------------------------
@@ -35,8 +35,8 @@ deepDegree = log(deepTheta(me = me, alpha = 0.05/npairs, beta = 0.1), base = 1/2
 thrd = -logpThreshold(me = me, (1/2)^seq(0,floor(deepDegree)), beta = 0.1)
 ```
 
-In a real-world analysis, we provided both relatedness estimation and related inference.
-The relatedness estimation is based on a moment estimator and required the installation of **plink2**
+In a real-world analysis, we provided both relatedness estimation and related inference.    
+The relatedness estimation is based on a moment estimator and required the installation of **plink2**.  
 ## Example one
 Example one is an example to conduct deepKin on single dataset, to calculate the n*(n-1)/2 pairs of relatedness scores and perform relatedness inference on all these results.
 
@@ -48,9 +48,9 @@ bfileprefix = "./inst/1KG-EUR.example1"
 ```
 
 ### Step 1
-deepKin Principle I:
-Evaluate the minimal number of me required for detecting target relatedness
+Evaluate the minimal number of me required for detecting target relatedness  
 ```
+## deepKin Principle I:  
 n = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".fam"), intern = T))
 m = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".bim"), intern = T))
 id = read.table(file = paste0(bfileprefix,".fam"), header = F)[,1]
