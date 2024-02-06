@@ -2,10 +2,11 @@
 
 export(calculateMe)
 export(deepKin_estimation)
+export(deepKin_power)
 export(deepTheta)
 export(extractPlinkGRM)
 export(extract_individual_id)
-export(logpThreshold)
+export(logalpha)
 export(minMe)
 importFrom(stats,pnorm)
 importFrom(stats,qnorm)

@@ -23,7 +23,13 @@ me = 242.73
 npairs = n*(n-1)/2
 minMe = minMe(theta = (1/2)^(0:4), alpha = 0.05/npairs, beta = 0.1)
 deepDegree = log(deepTheta(me = me, alpha = 0.05/npairs, beta = 0.1), base = 1/2)
-thrd = -logpThreshold(me = me, (1/2)^seq(0,floor(deepDegree)), beta = 0.1)
+deepKin_power(me, theta = (1/2)^(0:6), alpha = 0.05/npairs)
+
+plot(seq(0,6,0.2), deepKin_power(me, theta = (1/2)^(seq(0,6,0.2)), alpha = 0.05/npairs),
+     ylab = "Power", xlab = "Degree")
+abline(h=0.9)
+abline(v=deepDegree)
+
 
 #### Example One: one cohort ---------------------------------------------------
 #### ++ Prepare ----------------------------------------------------------------
@@ -53,7 +59,7 @@ me = calculateMe(bfileprefix = bfileprefix, method = "GRM", plink_path = plink_p
 deeptheta = deepTheta(me = me, alpha = 0.05/npairs, beta = 0.1)
 deepDegree = log(deeptheta, base = 1/2)
 ## deepKin Principle III:
-thrd = -logpThreshold(me = me, (1/2)^seq(0,floor(deepDegree)), beta = 0.1)
+thrd = -logalpha(me = me, (1/2)^seq(0,floor(deepDegree)), beta = 0.1)
 ## Set target degree
 targetDegree = floor(deepDegree)
 targetTheta = (1/2)^targetDegree
@@ -73,7 +79,7 @@ deepkin = deepKin_estimation(grm.diag = grm.diag, grm.tri = grm.tri, xcohort = F
 
 #### ++ Step 5 --------------------------------------------------------------------
 ## deepkin inference
-deepkin.qc = deepkin[which(deepkin$`-logp` > (-logpThreshold(me = me, theta = targetTheta, beta = 0.1))), ]
+deepkin.qc = deepkin[which(deepkin$`-logp` > (-logalpha(me = me, theta = targetTheta, beta = 0.1))), ]
 deepkin.qc$tag = cut(deepkin.qc$`-logp`,
                      breaks = c(0,thrd,Inf),
                      labels = c("Unrelated", paste0("Degree ", (length(thrd)-1):0)))
@@ -112,7 +118,7 @@ me = calculateMe(bfileprefix = bfileprefix, method = "GRM", plink_path = plink_p
 deeptheta = deepTheta(me = me, alpha = 0.05/npairs, beta = 0.1)
 deepDegree = log(deeptheta, base = 1/2)
 ## deepKin Principle III:
-thrd = -logpThreshold(me = me, (1/2)^seq(0,floor(deepDegree)), beta = 0.1)
+thrd = -logalpha(me = me, (1/2)^seq(0,floor(deepDegree)), beta = 0.1)
 ## Set target degree
 targetDegree = floor(deepDegree)
 targetTheta = (1/2)^targetDegree
@@ -132,7 +138,7 @@ deepkin = deepKin_estimation(grm.diag = grm.diag, grm.tri = grm.tri, xcohort = T
 
 #### ++ Step 5 --------------------------------------------------------------------
 ## deepkin inference
-deepkin.qc = deepkin[which(deepkin$`-logp` > (-logpThreshold(me = me, theta = targetTheta, beta = 0.1))), ]
+deepkin.qc = deepkin[which(deepkin$`-logp` > (-logalpha(me = me, theta = targetTheta, beta = 0.1))), ]
 deepkin.qc$tag = cut(deepkin.qc$`-logp`,
                      breaks = c(0,thrd,Inf),
                      labels = c("Unrelated", paste0("Degree ", (length(thrd)-1):0)))
