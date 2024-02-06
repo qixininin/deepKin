@@ -106,5 +106,3 @@ index = as.numeric(rownames(deepkin.qc))
 deepkin.qc.id = extract_individual_id(id = id, index = index, xcohort = F)
 deepkin.qc.rst = cbind(deepkin.qc.id, deepkin.qc)
 ```
-
-testtest

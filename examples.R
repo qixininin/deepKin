@@ -1,4 +1,8 @@
-install.packages("/Users/zqx/ZJU-PhD/2-Work/Rpackage/deepKin_0.1.0.tar.gz", repos = NULL, type = "source")
+#### Install package -----------------------------------------------------------
+library(devtools)
+install_github("qixininin/deepKin")
+
+#### Load package --------------------------------------------------------------
 library(deepKin)
 
 
@@ -19,11 +23,10 @@ me = 281.86
 n = 1490
 me = 242.73
 
-
 npairs = n*(n-1)/2
 minMe = minMe(theta = (1/2)^(0:4), alpha = 0.05/npairs, beta = 0.1)
 deepDegree = log(deepTheta(me = me, alpha = 0.05/npairs, beta = 0.1), base = 1/2)
-deepKin_power(me, theta = (1/2)^(0:6), alpha = 0.05/npairs)
+power = deepKin_power(me, theta = (1/2)^(0:6), alpha = 0.05/npairs)
 
 plot(seq(0,6,0.2), deepKin_power(me, theta = (1/2)^(seq(0,6,0.2)), alpha = 0.05/npairs),
      ylab = "Power", xlab = "Degree")
@@ -33,9 +36,9 @@ abline(v=deepDegree)
 
 #### Example One: one cohort ---------------------------------------------------
 #### ++ Prepare ----------------------------------------------------------------
-plink_path = "/Users/zqx/Downloads/plink2"
-# gear_path = "/Users/zqx/Downloads/gear"
-bfileprefix = "./inst/1KG-EUR.example1"
+plink_path = "/usr/bin/plink2"
+gear_path = "/usr/bin/gear"
+bfileprefix = "/public3/zqx/kingless/oxford3K/oxford3K.qc.maf02.prune01"
 
 #### ++ Step 1 -----------------------------------------------------------------
 ## deepKin Principle I:
@@ -51,18 +54,16 @@ minMe = minMe(theta = theta, alpha = 0.05/npairs, beta = 0.1)
 #### ++ Step 2 -----------------------------------------------------------------
 ## Perform your data QC and calculate me
 ## GRM method or LB method
-me = calculateMe(bfileprefix = bfileprefix, method = "GRM", plink_path = plink_path, pop_size = n)  # not suggested for biobank data
-# me = calculateMe(bfileprefix = bfileprefix, method = "LB", gear_path = gear_path, pop_size = n)     # suggested for biobank data
+# me = calculateMe(bfileprefix = bfileprefix, method = "GRM", plink_path = plink_path, pop_size = n)  # not suggested for biobank data
+me = calculateMe(bfileprefix = bfileprefix, method = "LB", gear_path = gear_path, pop_size = n)     # suggested for biobank data
 
 #### ++ Step 3 -----------------------------------------------------------------
 ## deepKin Principle II:
 deeptheta = deepTheta(me = me, alpha = 0.05/npairs, beta = 0.1)
 deepDegree = log(deeptheta, base = 1/2)
+
 ## deepKin Principle III:
-thrd = -logalpha(me = me, (1/2)^seq(0,floor(deepDegree)), beta = 0.1)
-## Set target degree
-targetDegree = floor(deepDegree)
-targetTheta = (1/2)^targetDegree
+power = deepKin_power(me, theta = (1/2)^(0:6), alpha = 0.05/npairs)
 
 #### ++ Step 4  -------------------------------------------------------------------
 ## Perform plink GRM
@@ -79,10 +80,11 @@ deepkin = deepKin_estimation(grm.diag = grm.diag, grm.tri = grm.tri, xcohort = F
 
 #### ++ Step 5 --------------------------------------------------------------------
 ## deepkin inference
-deepkin.qc = deepkin[which(deepkin$`-logp` > (-logalpha(me = me, theta = targetTheta, beta = 0.1))), ]
-deepkin.qc$tag = cut(deepkin.qc$`-logp`,
-                     breaks = c(0,thrd,Inf),
-                     labels = c("Unrelated", paste0("Degree ", (length(thrd)-1):0)))
+thrd = (1/2)^seq(0.5, floor(deepDegree)+0.5, 1)
+deepkin.qc = deepkin[which(deepkin$king > deeptheta), ]
+deepkin.qc$tag = cut(deepkin.qc$king,
+                     breaks = c(deeptheta,thrd,1),
+                     labels = c("Deepest theta", paste0("Degree ", (length(thrd)-1):0)))
 index = as.numeric(rownames(deepkin.qc))
 deepkin.qc.id = extract_individual_id(id = id, index = index, xcohort = F)
 deepkin.qc.rst = cbind(deepkin.qc.id, deepkin.qc)
@@ -91,7 +93,7 @@ deepkin.qc.rst = cbind(deepkin.qc.id, deepkin.qc)
 #### Example Two: cross cohorts ------------------------------------------------
 #### ++ Prepare ----------------------------------------------------------------
 plink_path = "/Users/zqx/Downloads/plink2"
-# gear_path = "/Users/zqx/Downloads/gear"
+gear_path = "/Users/zqx/Downloads/gear"
 bfileprefix = "./inst/1KG-EUR.example2"
 
 #### ++ Step 1 -----------------------------------------------------------------
