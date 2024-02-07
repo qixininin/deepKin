@@ -1,4 +1,4 @@
-#' deepKin_estimation function
+#' deepKin.estimation function
 #'
 #' @param grm.diag an n vector
 #' @param grm.tri when xcohort = F, grm.tri is an n\*(n-1) vector; when xcohort = T, it is an n1\*n2 vector
@@ -11,9 +11,9 @@
 #' @return deepKin estimates and p-values
 #' @export
 #'
-#' @examples \dontrun{KINGX = deepKin_estimation(grm.diag = grm.diag, grm.tri = grm.tri,
+#' @examples \dontrun{KINGX = deepKin.estimation(grm.diag = grm.diag, grm.tri = grm.tri,
 #'                    xcohort = F, me = me)}
-deepKin_estimation <- function(grm.diag, grm.tri, xcohort = F, me, pop_size1, pop_size2){
+deepKin.estimation <- function(grm.diag, grm.tri, xcohort = F, me, pop_size1, pop_size2){
 
   if(!xcohort){
     n = length(grm.diag)
@@ -51,7 +51,7 @@ deepKin_estimation <- function(grm.diag, grm.tri, xcohort = F, me, pop_size1, po
   ## Calculate p-value
   KINGX$var =  ( 2 * (1-KINGX$king)^2 ) / me
   KINGX$t = KINGX$king / sqrt(KINGX$var)
-  KINGX$`-logp` = -pnorm(KINGX$t, lower.tail = F, log.p = T) / log(10)
+  KINGX$minuslogp = -pnorm(KINGX$t, lower.tail = F, log.p = T) / log(10)
 
-  return(KINGX[,c("king","-logp")])
+  return(KINGX[,c("king","minuslogp")])
 }

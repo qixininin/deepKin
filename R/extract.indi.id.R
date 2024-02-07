@@ -1,4 +1,4 @@
-#' extract_individual_id function
+#' extract.indi.id function
 #' This function will return individual ID based on index in deepKin results and individual IDs
 #' @param id individual IDs
 #' @param index index in deepKin results
@@ -10,8 +10,8 @@
 #' @return two columns, the first one is ID1 and the second column is ID2
 #' @export
 #'
-#' @examples \dontrun{deepkin.qc.id = extract_individual_id(id = id, index = index, xcohort = F)}
-extract_individual_id <- function(id, index, xcohort, pop_size1 = NULL, pop_size2 = NULL)
+#' @examples \dontrun{deepkin.qc.id = extract.indi.id(id = id, index = index, xcohort = F)}
+extract.indi.id <- function(id, index, xcohort, pop_size1 = NULL, pop_size2 = NULL)
 {
   pop_size = length(id)
 

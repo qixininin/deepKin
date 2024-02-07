@@ -1,4 +1,4 @@
-#' calculateMe function
+#' calculate.me function
 #'
 #' @param bfileprefix bfileprefix of your plink bfiles.
 #' @param method
@@ -14,12 +14,12 @@
 #' @importFrom stats var
 #' @importFrom utils read.table
 #'
-#' @examples \dontrun{calculateMe(bfileprefix = "1KG-EUR.qc.inter", method = "LB")}
+#' @examples \dontrun{calculate.me(bfileprefix = "1KG-EUR.qc.inter", method = "LB")}
 
-calculateMe <- function(bfileprefix, method, plink_path = NULL, gear_path = NULL, freq_path = NULL, pop_size = NULL){
+calculate.me <- function(bfileprefix, method, plink_path = NULL, gear_path = NULL, freq_path = NULL, pop_size = NULL){
   switch(method,
          "GRM" = {
-           if(is.null(plink_path)) { stop( "Error in calculateMe(): No plink_path was specified! ") }
+           if(is.null(plink_path)) { stop( "Error in calculate.me(): No plink_path was specified! ") }
 
            ## plink1.9
            # if(!file.exists(paste0(bfileprefix,".grm.gz"))){
@@ -36,7 +36,7 @@ calculateMe <- function(bfileprefix, method, plink_path = NULL, gear_path = NULL
            me = 1/var(grm[-cumsum(1:pop_size)])
          },
          "LB"  = {
-           if(is.null(gear_path)) { stop( "Error in calculateMe(): No plink_path was specified! ") }
+           if(is.null(gear_path)) { stop( "Error in calculate.me(): No plink_path was specified! ") }
 
            if(!file.exists(paste0(bfileprefix,".it.me"))){
              system(paste0(gear_path, " --me --bfile ",bfileprefix," --iter 100 --out ",bfileprefix))

@@ -2,6 +2,8 @@
 library(devtools)
 install_github("qixininin/deepKin")
 
+install.packages("/public3/zqx/kingless/deepKin_0.1.0.tar.gz", repos = NULL, type = "source")
+
 #### Load package --------------------------------------------------------------
 library(deepKin)
 
@@ -24,14 +26,13 @@ n = 1490
 me = 242.73
 
 npairs = n*(n-1)/2
-minMe = minMe(theta = (1/2)^(0:4), alpha = 0.05/npairs, beta = 0.1)
-deepDegree = log(deepTheta(me = me, alpha = 0.05/npairs, beta = 0.1), base = 1/2)
-power = deepKin_power(me, theta = (1/2)^(0:6), alpha = 0.05/npairs)
+me.min = me.min(theta = (1/2)^(0:4), alpha = 0.05/npairs, beta = 0.1)
+degree.deep = log(theta.min(me = me, alpha = 0.05/npairs, beta = 0.1), base = 1/2)
+power.max = power.max(me, theta = (1/2)^(seq(0,6,0.2)), alpha = 0.05/npairs)
 
-plot(seq(0,6,0.2), deepKin_power(me, theta = (1/2)^(seq(0,6,0.2)), alpha = 0.05/npairs),
-     ylab = "Power", xlab = "Degree")
-abline(h=0.9)
-abline(v=deepDegree)
+plot(seq(0,6,0.2), power.max, ylab = "Power", xlab = "Degree")
+abline(h=0.9, col = "blue")
+abline(v=degree.deep, col = "red")
 
 
 #### Example One: one cohort ---------------------------------------------------
@@ -47,23 +48,21 @@ n = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".fam"), inter
 m = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".bim"), intern = T))
 id = read.table(file = paste0(bfileprefix,".fam"), header = F)[,1]
 npairs = n*(n-1)/2
-degree = 0:5
-theta = (1/2)^degree
-minMe = minMe(theta = theta, alpha = 0.05/npairs, beta = 0.1)
+me.min = me.min(theta = (1/2)^(0:4), alpha = 0.05/npairs, beta = 0.1)
 
 #### ++ Step 2 -----------------------------------------------------------------
 ## Perform your data QC and calculate me
 ## GRM method or LB method
-# me = calculateMe(bfileprefix = bfileprefix, method = "GRM", plink_path = plink_path, pop_size = n)  # not suggested for biobank data
-me = calculateMe(bfileprefix = bfileprefix, method = "LB", gear_path = gear_path, pop_size = n)     # suggested for biobank data
+# me = calculate.me(bfileprefix = bfileprefix, method = "GRM", plink_path = plink_path, pop_size = n)  # not suggested for biobank data
+me = calculate.me(bfileprefix = bfileprefix, method = "LB", gear_path = gear_path, pop_size = n)     # suggested for biobank data
 
 #### ++ Step 3 -----------------------------------------------------------------
 ## deepKin Principle II:
-deeptheta = deepTheta(me = me, alpha = 0.05/npairs, beta = 0.1)
-deepDegree = log(deeptheta, base = 1/2)
+theta.min = theta.min(me = me, alpha = 0.05/npairs, beta = 0.1)
+degree.deep = log(theta.min, base = 1/2)
 
 ## deepKin Principle III:
-power = deepKin_power(me, theta = (1/2)^(0:6), alpha = 0.05/npairs)
+power.max = power.max(me, theta = (1/2)^(0:6), alpha = 0.05/npairs)
 
 #### ++ Step 4  -------------------------------------------------------------------
 ## Perform plink GRM
@@ -71,30 +70,36 @@ if(!file.exists(paste0(bfileprefix,".rel.bin"))){
   system(paste0(plink_path, " --silent --bfile ", bfileprefix, " --make-rel triangle bin4 --out ", bfileprefix))
 }
 ## Extract plink GRM
-grm.rst = extractPlinkGRM(bfileprefix, xcohort = F, pop_size = n)
+grm.rst = extract.plink.grm(bfileprefix, xcohort = F, pop_size1 = n)
 grm.diag = grm.rst$diag
 grm.tri  = grm.rst$tri
 
 ## Perform deepKin
-deepkin = deepKin_estimation(grm.diag = grm.diag, grm.tri = grm.tri, xcohort = F, me = me)
+deepkin = deepKin.estimation(grm.diag = grm.diag, grm.tri = grm.tri, xcohort = F, me = me)
+
+## Output estimation and p-values (This file can be large according to the number of pairs)
+write.table(deepkin, file = paste0(bfileprefix, ".deepkin"), quote = F, col.names = T, row.names = F)
 
 #### ++ Step 5 --------------------------------------------------------------------
 ## deepkin inference
-thrd = (1/2)^seq(0.5, floor(deepDegree)+0.5, 1)
-deepkin.qc = deepkin[which(deepkin$king > deeptheta), ]
-deepkin.qc$tag = cut(deepkin.qc$king,
-                     breaks = c(deeptheta,thrd,1),
-                     labels = c("Deepest theta", paste0("Degree ", (length(thrd)-1):0)))
+thrd = (1/2)^seq(0.5, 10.5, 1)
+thrd = thrd[which(thrd>theta.min)]
+deepkin.qc = deepkin[which(deepkin$king > theta.min), ]
+deepkin.qc$degree = cut(deepkin.qc$king,
+                        breaks = c(theta.min,thrd,1),
+                        labels = c(paste0("Deepest-",length(thrd)-1), (length(thrd)-1):0))
 index = as.numeric(rownames(deepkin.qc))
-deepkin.qc.id = extract_individual_id(id = id, index = index, xcohort = F)
+deepkin.qc.id = extract.indi.id(id = id, index = index, xcohort = F)
 deepkin.qc.rst = cbind(deepkin.qc.id, deepkin.qc)
+
+write.table(deepkin.qc.rst, file = paste0(bfileprefix, ".related"), quote = F, col.names = T, row.names = F)
 
 
 #### Example Two: cross cohorts ------------------------------------------------
 #### ++ Prepare ----------------------------------------------------------------
-plink_path = "/Users/zqx/Downloads/plink2"
-gear_path = "/Users/zqx/Downloads/gear"
-bfileprefix = "./inst/1KG-EUR.example2"
+plink_path = "/usr/bin/plink2"
+gear_path = "/usr/bin/gear"
+bfileprefix = "/public3/zqx/kingless/oxford3K/oxford3K.qc.maf02.prune01"
 
 #### ++ Step 1 -----------------------------------------------------------------
 ## deepKin Principle I:
@@ -102,28 +107,24 @@ bfileprefix = "./inst/1KG-EUR.example2"
 n = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".fam"), intern = T))
 m = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".bim"), intern = T))
 id = read.table(file = paste0(bfileprefix,".fam"), header = F)[,1]
-n1 = 99
+n1 = 100
 n2 = n-n1
 npairs = n1*n2
-degree = 1:5
-theta = (1/2)^degree
-minMe = minMe(theta = theta, alpha = 0.05/npairs, beta = 0.1)
+me.min = me.min(theta = (1/2)^(0:4), alpha = 0.05/npairs, beta = 0.1)
 
 #### ++ Step 2 -----------------------------------------------------------------
 ## Perform your data QC and calculate me
 ## GRM method or LB method
-me = calculateMe(bfileprefix = bfileprefix, method = "GRM", plink_path = plink_path, pop_size = n)  # not suggested for biobank data
-# me = calculateMe(bfileprefix = bfileprefix, method = "LB", gear_path = gear_path, pop_size = n)     # suggested for biobank data
+# me = calculate.me(bfileprefix = bfileprefix, method = "GRM", plink_path = plink_path, pop_size = n)  # not suggested for biobank data
+me = calculate.me(bfileprefix = bfileprefix, method = "LB", gear_path = gear_path, pop_size = n)     # suggested for biobank data
 
 #### ++ Step 3 -----------------------------------------------------------------
 ## deepKin Principle II:
-deeptheta = deepTheta(me = me, alpha = 0.05/npairs, beta = 0.1)
-deepDegree = log(deeptheta, base = 1/2)
+theta.min = theta.min(me = me, alpha = 0.05/npairs, beta = 0.1)
+degree.deep = log(theta.min, base = 1/2)
+
 ## deepKin Principle III:
-thrd = -logalpha(me = me, (1/2)^seq(0,floor(deepDegree)), beta = 0.1)
-## Set target degree
-targetDegree = floor(deepDegree)
-targetTheta = (1/2)^targetDegree
+power.max = power.max(me, theta = (1/2)^(0:6), alpha = 0.05/npairs)
 
 #### ++ Step 4  -------------------------------------------------------------------
 ## Perform plink GRM
@@ -131,19 +132,20 @@ if(!file.exists(paste0(bfileprefix,".rel.bin"))){
   system(paste0(plink_path, " --silent --bfile ", bfileprefix, " --make-rel triangle bin4 --out ", bfileprefix))
 }
 ## Extract plink GRM
-grm.rst = extractPlinkGRM(bfileprefix, xcohort = T, pop_size = n1, pop_size2 = n2)
+grm.rst = extract.plink.grm(bfileprefix, xcohort = T, pop_size1 = n1, pop_size2 = n2)
 grm.diag = grm.rst$diag
 grm.tri  = grm.rst$tri
 
 ## Perform deepKin
-deepkin = deepKin_estimation(grm.diag = grm.diag, grm.tri = grm.tri, xcohort = T, me = me, pop_size1 = n1, pop_size2 = n2)
+deepkin = deepKin.estimation(grm.diag = grm.diag, grm.tri = grm.tri, xcohort = T, me = me, pop_size1 = n1, pop_size2 = n2)
 
 #### ++ Step 5 --------------------------------------------------------------------
 ## deepkin inference
-deepkin.qc = deepkin[which(deepkin$`-logp` > (-logalpha(me = me, theta = targetTheta, beta = 0.1))), ]
-deepkin.qc$tag = cut(deepkin.qc$`-logp`,
-                     breaks = c(0,thrd,Inf),
-                     labels = c("Unrelated", paste0("Degree ", (length(thrd)-1):0)))
+thrd = (1/2)^seq(0.5, floor(degree.deep)+0.5, 1)
+deepkin.qc = deepkin[which(deepkin$king > theta.min), ]
+deepkin.qc$tag = cut(deepkin.qc$king,
+                     breaks = c(theta.min,thrd,1),
+                     labels = c("Deepest theta", paste0("Degree ", (length(thrd)-1):0)))
 index = as.numeric(rownames(deepkin.qc))
-deepkin.qc.id = extract_individual_id(id = id, index = index, xcohort = T, pop_size1 = n1, pop_size2 = n2)
+deepkin.qc.id = extract.indi.id(id = id, index = index, xcohort = T, pop_size1 = n1, pop_size2 = n2)
 deepkin.qc.rst = cbind(deepkin.qc.id, deepkin.qc)
