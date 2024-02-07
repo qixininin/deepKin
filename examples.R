@@ -25,14 +25,12 @@ me = 281.86
 n = 1490
 me = 242.73
 
-npairs = n*(n-1)/2
-me.min = me.min(theta = (1/2)^(0:4), alpha = 0.05/npairs, beta = 0.1)
-degree.deep = log(theta.min(me = me, alpha = 0.05/npairs, beta = 0.1), base = 1/2)
-power.max = power.max(me, theta = (1/2)^(seq(0,6,0.2)), alpha = 0.05/npairs)
+dK = deepKin(n = n, me = me, alpha = 0.05, beta = 0.1, max.degree = 5)
+cat(deepKin.summary(dK))
 
-plot(seq(0,6,0.2), power.max, ylab = "Power", xlab = "Degree")
+plot(dK$power.max$degree, dK$power.max$Power.max, ylab = "Power", xlab = "Degree")
 abline(h=0.9, col = "blue")
-abline(v=degree.deep, col = "red")
+abline(v=dK$delta, col = "red")
 
 
 #### Example One: one cohort ---------------------------------------------------
