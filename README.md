@@ -107,9 +107,9 @@ power.max = power.max(me, theta = (1/2)^(0:6), alpha = 0.05/npairs)
 ### Step 4
 Once you are ready for performing relatedness estimation, make sure you use plink2 **--make-rel** command with argument **triangle** and **bin4** to calculate GRM, which will save you a lot of storage, because the result is stored in binary format.    
 
-- Function **extractPlinkGRM()**: extract the diagonal and upper triangular content of GRM for further calculation.    
+- Function **extract.plink.grm()**: extract the diagonal and upper triangular content of GRM for further calculation.    
 
-- Function **deepKin_estimation()**: perform relatedness estimation, based on GRM elements.    
+- Function **deepKin.estimation()**: perform relatedness estimation, based on GRM elements.    
 
 Input me to calculate sampling variance and p-values.    
 
