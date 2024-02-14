@@ -1,5 +1,3 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
-
 
 # deepKin
 
@@ -55,7 +53,7 @@ Example one is an example to conduct deepKin on single dataset, to calculate the
 
 ### Prepare
 Please prepare plink bfiles - **bfileprefix.bed**, **bfileprefix.bim**, and **bfileprefix.fam**.   
-Please download "GEAR"[https://github.com/gc5k/GEAR] if you want to calculate me using biobank-scale data.   
+Please download [GEAR](https://github.com/gc5k/GEAR) if you want to calculate me using biobank-scale data.   
 ```
 plink_path = "/usr/bin/plink2"
 gear_path = "/usr/bin/gear"
@@ -66,9 +64,9 @@ bfileprefix = "./inst/1KG-EUR.example1"
 Evaluate the minimum number of me required for detecting target relatedness.    
 This will give you an outline of how to design your genotyping strategy based on your target relatedness.     
 - Function **me.min()**:
-<div>
-<center> $m_e \geq 2 \left[ \frac{{z_{1-\alpha} + z_{1-\beta} (1-\theta_D^t)}}{{\theta_D^t}} \right]^2$ </center>    
-</div>
+
+$$m_e \geq 2 \left[ \frac{{z_{1-\alpha} + z_{1-\beta} (1-\theta_D^t)}}{{\theta_D^t}} \right]^2$$
+
 
 ```
 ## deepKin Principle I:  
@@ -92,10 +90,10 @@ me = calculate.me(bfileprefix = bfileprefix, method = "RDM", gear_path = gear_pa
 After calculating me for the data, principle II and III will give you the basic idea on how to make relatedness inference confidentially or perform individual QC with reliable cutoffs.    
 
 - Function **theta.min()**:    
-<center>$\theta_D^\delta \geq \frac{{z_{1-\alpha} + z_{1-\beta}}}{{\sqrt{\frac{{m_e}}{2}} + z_{1-\beta}}}$</center>    
+$$\theta_D^\delta \geq \frac{{z_{1-\alpha} + z_{1-\beta}}}{{\sqrt{\frac{{m_e}}{2}} + z_{1-\beta}}}$$  
 
 - Function **power.max()**:    
-<center>$\pi = 1-\beta = z^{-1} \left( \frac{{\sqrt{\frac{{m_e}}{2}} \theta_D^t - z_{1-\alpha}}}{{1-\theta_D^t}} \right)$ </center>    
+$$\pi = 1-\beta = z^{-1} \left( \frac{{\sqrt{\frac{{m_e}}{2}} \theta_D^t - z_{1-\alpha}}}{{1-\theta_D^t}} \right)$$
 
 ```
 ## deepKin Principle II:
