@@ -1,3 +1,6 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-MML-AM_CHTML" async></script>
+
+
 # deepKin
 
 ## Package installation
@@ -62,9 +65,10 @@ bfileprefix = "./inst/1KG-EUR.example1"
 ### Step 1
 Evaluate the minimum number of me required for detecting target relatedness.    
 This will give you an outline of how to design your genotyping strategy based on your target relatedness.     
-- Function **me.min()**:    
+- Function **me.min()**:
+<div>
 <center> $m_e \geq 2 \left[ \frac{{z_{1-\alpha} + z_{1-\beta} (1-\theta_D^t)}}{{\theta_D^t}} \right]^2$ </center>    
-
+</div>
 
 ```
 ## deepKin Principle I:  
