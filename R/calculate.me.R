@@ -2,9 +2,9 @@
 #'
 #' @param bfileprefix bfileprefix of your plink bfiles.
 #' @param method
-#' method = "LB": a approximation approach. LB method is applied using "GEAR". The default interation time is 100.
+#' method = "RDM": a approximation approach based on randomization. RDM method is applied using "GEAR". The default iteration time is 100.
 #' method = "GRM": based on 1/var(grm.off.diag); GRM method is applied using "plink"
-#' We highly suggest using method = "LB" for biobank-scale data.
+#' We highly suggest using method = "RDM" for biobank-scale data.
 #' @param plink_path plink path
 #' @param gear_path gear path
 #' @param freq_path frequency file (.freq) path
@@ -14,7 +14,7 @@
 #' @importFrom stats var
 #' @importFrom utils read.table
 #'
-#' @examples \dontrun{calculate.me(bfileprefix = "1KG-EUR.qc.inter", method = "LB")}
+#' @examples \dontrun{calculate.me(bfileprefix = "1KG-EUR.qc.inter", method = "RDM")}
 
 calculate.me <- function(bfileprefix, method, plink_path = NULL, gear_path = NULL, freq_path = NULL, pop_size = NULL){
   switch(method,
@@ -35,7 +35,7 @@ calculate.me <- function(bfileprefix, method, plink_path = NULL, gear_path = NUL
            grm = readBin(paste0(bfileprefix, ".rel.bin"), what="numeric", n=pop_size*(pop_size+1)/2, size=4)
            me = 1/var(grm[-cumsum(1:pop_size)])
          },
-         "LB"  = {
+         "RDM"  = {
            if(is.null(gear_path)) { stop( "Error in calculate.me(): No plink_path was specified! ") }
 
            if(!file.exists(paste0(bfileprefix,".it.me"))){

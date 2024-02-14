@@ -15,15 +15,12 @@ me = 56945
 
 ## UKB Chinese
 n = 1435
-me = 38948.2
+me = 38948
 
-## Wheat
-n = 811
-me = 281.86
+## Middle East
+n = 137
+me = 22049
 
-## Cattle
-n = 1490
-me = 242.73
 
 dK = deepKin(n = n, me = me, alpha = 0.05, beta = 0.1, max.degree = 5)
 cat(deepKin.summary(dK))
@@ -50,9 +47,9 @@ me.min = me.min(theta = (1/2)^(0:4), alpha = 0.05/npairs, beta = 0.1)
 
 #### ++ Step 2 -----------------------------------------------------------------
 ## Perform your data QC and calculate me
-## GRM method or LB method
+## GRM method or RDM method
 # me = calculate.me(bfileprefix = bfileprefix, method = "GRM", plink_path = plink_path, pop_size = n)  # not suggested for biobank data
-me = calculate.me(bfileprefix = bfileprefix, method = "LB", gear_path = gear_path, pop_size = n)     # suggested for biobank data
+me = calculate.me(bfileprefix = bfileprefix, method = "RDM", gear_path = gear_path, pop_size = n)     # suggested for biobank data
 
 #### ++ Step 3 -----------------------------------------------------------------
 ## deepKin Principle II:
@@ -112,9 +109,9 @@ me.min = me.min(theta = (1/2)^(0:4), alpha = 0.05/npairs, beta = 0.1)
 
 #### ++ Step 2 -----------------------------------------------------------------
 ## Perform your data QC and calculate me
-## GRM method or LB method
+## GRM method or RDM method
 # me = calculate.me(bfileprefix = bfileprefix, method = "GRM", plink_path = plink_path, pop_size = n)  # not suggested for biobank data
-me = calculate.me(bfileprefix = bfileprefix, method = "LB", gear_path = gear_path, pop_size = n)     # suggested for biobank data
+me = calculate.me(bfileprefix = bfileprefix, method = "RDM", gear_path = gear_path, pop_size = n)     # suggested for biobank data
 
 #### ++ Step 3 -----------------------------------------------------------------
 ## deepKin Principle II:

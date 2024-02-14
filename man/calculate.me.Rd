@@ -16,9 +16,9 @@ calculate.me(
 \arguments{
 \item{bfileprefix}{bfileprefix of your plink bfiles.}
 
-\item{method}{method = "LB": a approximation approach. LB method is applied using "GEAR". The default interation time is 100.
+\item{method}{method = "RDM": a approximation approach based on randomization. RDM method is applied using "GEAR". The default iteration time is 100.
 method = "GRM": based on 1/var(grm.off.diag); GRM method is applied using "plink"
-We highly suggest using method = "LB" for biobank-scale data.}
+We highly suggest using method = "RDM" for biobank-scale data.}
 
 \item{plink_path}{plink path}
 
@@ -35,5 +35,5 @@ me
 calculate.me function
 }
 \examples{
-\dontrun{calculate.me(bfileprefix = "1KG-EUR.qc.inter", method = "LB")}
+\dontrun{calculate.me(bfileprefix = "1KG-EUR.qc.inter", method = "RDM")}
 }
