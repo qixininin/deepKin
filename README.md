@@ -65,6 +65,7 @@ This will give you an outline of how to design your genotyping strategy based on
 - Function **me.min()**:    
 <center> $m_e \geq 2 \left[ \frac{{z_{1-\alpha} + z_{1-\beta} (1-\theta_D^t)}}{{\theta_D^t}} \right]^2$ </center>    
 
+
 ```
 ## deepKin Principle I:  
 n = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".fam"), intern = T))
@@ -75,7 +76,8 @@ me.min = me.min(theta = (1/2)^(0:4), alpha = 0.05/npairs, beta = 0.1)
 ```
 
 ### Step 2
-If you have already got both the sample and their genotypes. Perform your data QC and calculate me using GRM method or RDM (randomization) method.
+If you have already got both the sample and their genotypes. Perform your data QC and calculate me using GRM method or RDM (randomization) method.    
+
 ```
 ## GRM method or RDM method
 me = calculate.me(bfileprefix = bfileprefix, method = "GRM", plink_path = plink_path, pop_size = n)  # not suggested for biobank data
@@ -106,6 +108,7 @@ Once you are ready for performing relatedness estimation, make sure you use plin
 - Function **extractPlinkGRM()**: extract the diagonal and upper triangular content of GRM for further calculation.    
 
 - Function **deepKin_estimation()**: perform relatedness estimation, based on GRM elements.    
+
 Input me to calculate sampling variance and p-values.    
 
 
