@@ -72,7 +72,7 @@ $$m_e \geq 2 \left[ \frac{{z_{1-\alpha} + z_{1-\beta} (1-\theta_D^t)}}{{\theta_D
 ## deepKin Principle I:  
 n = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".fam"), intern = T))
 m = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".bim"), intern = T))
-id = read.table(file = paste0(bfileprefix,".fam"), header = F)[,1]
+id = read.table(file = paste0(bfileprefix,".fam"), header = F)[,2]
 npairs = n*(n-1)/2
 me.min = me.min(theta = (1/2)^(0:4), alpha = 0.05/npairs, beta = 0.1)
 ```
@@ -97,7 +97,7 @@ $$\pi = 1-\beta = z^{-1} \left( \frac{{\sqrt{\frac{{m_e}}{2}} \theta_D^t - z_{1-
 
 ```
 ## deepKin Principle II:
-theta.min = theta.min(me = me, alpha = 0.05/npairs, beta = 0.1)
+theta.min = theta.min(me = me, alpha = 0.05/npairs)
 degree.deep = log(theta.min, base = 1/2)
 
 ## deepKin Principle III:

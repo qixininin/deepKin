@@ -41,7 +41,7 @@ bfileprefix = "/public3/zqx/kingless/oxford3K/oxford3K.qc.maf02.prune01"
 ## Evaluate the minimal number of me required for detecting target relatedness
 n = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".fam"), intern = T))
 m = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".bim"), intern = T))
-id = read.table(file = paste0(bfileprefix,".fam"), header = F)[,1]
+id = read.table(file = paste0(bfileprefix,".fam"), header = F)[,2]
 npairs = n*(n-1)/2
 me.min = me.min(theta = (1/2)^(0:4), alpha = 0.05/npairs, beta = 0.1)
 
@@ -53,7 +53,7 @@ me = calculate.me(bfileprefix = bfileprefix, method = "RDM", gear_path = gear_pa
 
 #### ++ Step 3 -----------------------------------------------------------------
 ## deepKin Principle II:
-theta.min = theta.min(me = me, alpha = 0.05/npairs, beta = 0.1)
+theta.min = theta.min(me = me, alpha = 0.05/npairs)
 degree.deep = log(theta.min, base = 1/2)
 
 ## deepKin Principle III:
@@ -101,7 +101,7 @@ bfileprefix = "/public3/zqx/kingless/oxford3K/oxford3K.qc.maf02.prune01"
 ## Evaluate the minimal number of me required for detecting target relatedness
 n = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".fam"), intern = T))
 m = as.numeric(system(paste0("awk 'END{print NR}' ", bfileprefix, ".bim"), intern = T))
-id = read.table(file = paste0(bfileprefix,".fam"), header = F)[,1]
+id = read.table(file = paste0(bfileprefix,".fam"), header = F)[,2]
 n1 = 100
 n2 = n-n1
 npairs = n1*n2
@@ -115,7 +115,7 @@ me = calculate.me(bfileprefix = bfileprefix, method = "RDM", gear_path = gear_pa
 
 #### ++ Step 3 -----------------------------------------------------------------
 ## deepKin Principle II:
-theta.min = theta.min(me = me, alpha = 0.05/npairs, beta = 0.1)
+theta.min = theta.min(me = me, alpha = 0.05/npairs)
 degree.deep = log(theta.min, base = 1/2)
 
 ## deepKin Principle III:

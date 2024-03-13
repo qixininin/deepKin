@@ -3,26 +3,22 @@
 \name{theta.min}
 \alias{theta.min}
 \title{theta.min function
-This function is related to the second principle in deepKin analysis.
-This function calculates the deepest relatedness supported by the data, based on me, type I and type II error rates}
+This function calculates the deepest relatedness supported by the data, based on me and siginificant level}
 \usage{
-theta.min(me, alpha, beta)
+theta.min(me, alpha)
 }
 \arguments{
 \item{me}{The effective number of markers}
 
-\item{alpha}{Type I error rate}
-
-\item{beta}{Type II error rate}
+\item{alpha}{Significant level}
 }
 \value{
 theta.min deepest theta relatedness score
 }
 \description{
 theta.min function
-This function is related to the second principle in deepKin analysis.
-This function calculates the deepest relatedness supported by the data, based on me, type I and type II error rates
+This function calculates the deepest relatedness supported by the data, based on me and siginificant level
 }
 \examples{
-theta.min(me = 5000, alpha = 0.05, beta = 0.1)
+theta.min(me = 5000, alpha = 0.05)
 }

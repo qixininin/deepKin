@@ -31,8 +31,8 @@ deepKin.summary <- function(deepKin){
                          "  -------------------------------------------------------------", "\n",
                          "  **Deepest theta (theta.min):    ", round(deepKin$theta.min,4),  "\n",
                          "  **Deepest degree (delta): ", round(deepKin$delta,4),  "\n", "\n",
-                         "  **Suggested thresholds: ", "\n",
-                         "  ", readr::format_delim(deepKin$threshold, "\t", eol = "\n  "), "\n", "\n",
+                         # "  **Suggested thresholds: ", "\n",
+                         # "  ", readr::format_delim(deepKin$threshold, "\t", eol = "\n  "), "\n", "\n",
 
 
                          "  -------------------------------------------------------------", "\n",
