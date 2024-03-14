@@ -33,6 +33,7 @@ deepKin <- function(n, me, alpha = 0.05, beta = 0.1, max.degree = 5){
   #                  Range = range)
   # df2 = rbind(df2, c("delta", format(theta.min, digits = 2)))
 
+
   ## Power
   df3 = data.frame(degree = 0:max.degree,
                    Theta = (1/2)^(0:max.degree),

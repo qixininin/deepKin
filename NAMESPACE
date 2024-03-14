@@ -2,11 +2,13 @@
 
 export(calculate.me)
 export(deepKin)
+export(deepKin.classification)
 export(deepKin.estimation)
 export(deepKin.summary)
 export(extract.indi.id)
 export(extract.plink.grm)
 export(logalpha)
+export(logp)
 export(me.min)
 export(power.max)
 export(theta.min)

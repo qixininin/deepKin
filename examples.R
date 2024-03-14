@@ -77,18 +77,15 @@ write.table(deepkin, file = paste0(bfileprefix, ".deepkin"), quote = F, col.name
 
 #### ++ Step 5 --------------------------------------------------------------------
 ## deepkin inference
-thrd = (1/2)^seq(0.5, 10.5, 1)
-thrd = thrd[which(thrd>theta.min)]
 deepkin.qc = deepkin[which(deepkin$king > theta.min), ]
-deepkin.qc$degree = cut(deepkin.qc$king,
-                        breaks = c(theta.min,thrd,1),
-                        labels = c(paste0("Deepest-",length(thrd)-1), (length(thrd)-1):0))
+## individual ID
 index = as.numeric(rownames(deepkin.qc))
 deepkin.qc.id = extract.indi.id(id = id, index = index, xcohort = F)
-deepkin.qc.rst = cbind(deepkin.qc.id, deepkin.qc)
-
+## classification
+deepkin.qc.class = deepKin.classification(deepkin.qc$king, me = me, alpha = 0.05/npairs)
+## output results
+deepkin.qc.rst = cbind(deepkin.qc.id, deepkin.qc.class)
 write.table(deepkin.qc.rst, file = paste0(bfileprefix, ".related"), quote = F, col.names = T, row.names = F)
-
 
 #### Example Two: cross cohorts ------------------------------------------------
 #### ++ Prepare ----------------------------------------------------------------
@@ -136,11 +133,12 @@ deepkin = deepKin.estimation(grm.diag = grm.diag, grm.tri = grm.tri, xcohort = T
 
 #### ++ Step 5 --------------------------------------------------------------------
 ## deepkin inference
-thrd = (1/2)^seq(0.5, floor(degree.deep)+0.5, 1)
 deepkin.qc = deepkin[which(deepkin$king > theta.min), ]
-deepkin.qc$tag = cut(deepkin.qc$king,
-                     breaks = c(theta.min,thrd,1),
-                     labels = c("Deepest theta", paste0("Degree ", (length(thrd)-1):0)))
+## individual ID
 index = as.numeric(rownames(deepkin.qc))
 deepkin.qc.id = extract.indi.id(id = id, index = index, xcohort = T, pop_size1 = n1, pop_size2 = n2)
-deepkin.qc.rst = cbind(deepkin.qc.id, deepkin.qc)
+## classification
+deepkin.qc.class = deepKin.classification(deepkin.qc$king, me = me, alpha = 0.05/npairs)
+## output results
+deepkin.qc.rst = cbind(deepkin.qc.id, deepkin.qc.class)
+write.table(deepkin.qc.rst, file = paste0(bfileprefix, ".related"), quote = F, col.names = T, row.names = F)

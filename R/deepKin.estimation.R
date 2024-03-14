@@ -49,9 +49,9 @@ deepKin.estimation <- function(grm.diag, grm.tri, xcohort = F, me, pop_size1, po
   KINGX$king = as.numeric(KINGX$king)
 
   ## Calculate p-value
-  KINGX$var =  ( 2 * (1-KINGX$king)^2 ) / me
-  KINGX$t = KINGX$king / sqrt(KINGX$var)
-  KINGX$minuslogp = -pnorm(KINGX$t, lower.tail = F, log.p = T) / log(10)
+  # KINGX$var =  ( 2 * (1-KINGX$king)^2 ) / me
+  # KINGX$t = KINGX$king / sqrt(KINGX$var)
+  KINGX$minuslogp = -pnorm(KINGX$king, mean = 0, sd = sqrt(2/me), lower.tail = F, log.p = T) / log(10)
 
   return(KINGX[,c("king","minuslogp")])
 }
