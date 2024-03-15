@@ -34,7 +34,10 @@ abline(v=dK$delta, col = "red")
 #### ++ Prepare ----------------------------------------------------------------
 plink_path = "/usr/bin/plink2"
 gear_path = "/usr/bin/gear"
-bfileprefix = "/public3/zqx/kingless/oxford3K/oxford3K.qc.maf02.prune01"
+bfileprefix = "/public3/zqx/kingless/oxford3K/oxford3K.qc.maf005"
+# bfileprefix = "/public3/zqx/kingless/oxford3K/oxford3K.qc.maf02"
+# bfileprefix = "/public3/zqx/kingless/oxford3K/oxford3K.qc.maf02.noaim005"
+# bfileprefix = "/public3/zqx/kingless/oxford3K/oxford3K.qc.maf02.prune01"
 
 #### ++ Step 1 -----------------------------------------------------------------
 ## deepKin Principle I:
