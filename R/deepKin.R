@@ -1,5 +1,5 @@
 #' deepKin function
-#' This returns a list of deepKin results based on three principles, including the suggested threshold for each degree of relatedness
+#' This returns a list of deepKin summary results
 #'
 #' @param n The population size
 #' @param me The effective number of markers
@@ -11,16 +11,14 @@
 #' @export
 #'
 #' @examples deepKin(n = 1000, me = 300, alpha = 0.05, beta = 0.1, max.degree = 5)
-deepKin <- function(n, me, alpha = 0.05, beta = 0.1, max.degree = 5){
-
-  npairs = n*(n-1)/2
+deepKin <- function(n, me, alpha, beta, max.degree){
 
   ## Me
   df1 = data.frame(degree = 0:max.degree,
                    Theta  = (1/2)^(0:max.degree),
-                   Me.min = format(me.min(theta = (1/2)^(0:max.degree), alpha = alpha/npairs, beta = beta), digits = 4))
+                   Me.min = format(me.min(theta = (1/2)^(0:max.degree), alpha = alpha, beta = beta), digits = 4))
 
-  theta.min = theta.min(me = me, alpha = alpha/npairs)
+  theta.min = theta.min(me = me, alpha = alpha)
   delta = log(theta.min, base = 1/2)
 
   ## Threshold
@@ -37,15 +35,16 @@ deepKin <- function(n, me, alpha = 0.05, beta = 0.1, max.degree = 5){
   ## Power
   df3 = data.frame(degree = 0:max.degree,
                    Theta = (1/2)^(0:max.degree),
-                   Power.max = format(power.max(me, theta = (1/2)^(0:max.degree), alpha = 0.05/npairs), digits = 4))
+                   Power.max = format(power.max(me, theta = (1/2)^(0:max.degree), alpha = alpha), digits = 4))
 
   deepKin = list(n = n,
                  me = me,
-                 npairs = npairs,
+                 npairs = n*(n-1)/2,
+                 alpha = alpha,
+                 beta = beta,
                  me.min = df1,
                  theta.min = theta.min,
                  delta = delta,
-                 # threshold = df2,
                  power.max = df3)
 
 

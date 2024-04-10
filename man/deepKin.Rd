@@ -3,9 +3,9 @@
 \name{deepKin}
 \alias{deepKin}
 \title{deepKin function
-This returns a list of deepKin results based on three principles, including the suggested threshold for each degree of relatedness}
+This returns a list of deepKin summary results}
 \usage{
-deepKin(n, me, alpha = 0.05, beta = 0.1, max.degree = 5)
+deepKin(n, me, alpha, beta, max.degree)
 }
 \arguments{
 \item{n}{The population size}
@@ -23,7 +23,7 @@ a list
 }
 \description{
 deepKin function
-This returns a list of deepKin results based on three principles, including the suggested threshold for each degree of relatedness
+This returns a list of deepKin summary results
 }
 \examples{
 deepKin(n = 1000, me = 300, alpha = 0.05, beta = 0.1, max.degree = 5)

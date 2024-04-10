@@ -1,7 +1,8 @@
 #' logp function
 #'
 #' @param x test theta vector
-#' @param null.theta the theta of null hypothesis
+#' @param null.theta the theta of null hypothesis, null.theta can not been 0,
+#'        because it is one-side test for null.theta = 0, we considered absolute value in this function
 #' @param me the number of effective markers
 #'
 #' @return logp

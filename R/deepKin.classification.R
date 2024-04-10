@@ -27,6 +27,7 @@ deepKin.classification <- function(theta.x, me, alpha)
   # ## If p.t1 is significant,     --> 0 degree
   # ## If p.t1 is not significant, --> 1 degree
   # class[which(degree.t==0)] = ifelse(logp.t1[which(degree.t==0)]<log10(alpha), 0,1)
+  ## using 0.5 degree as the threshold between 0 and 1
   class[which(degree.t==0)] = ifelse(degree.x[which(degree.t==0)]<0.5, 0, 1)
 
   ## See if both p.t and p.t1 are significant

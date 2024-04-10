@@ -17,7 +17,9 @@ Make sure that when you use xcohort = T, the individual order is organized just 
 \item{pop_size2}{population size for the second cohort when xcohort = T}
 }
 \value{
-a list $diag the diagnal elements, $tri the triangle elements
+a list
+        $diag the diagnal elements, it is an n vector
+        $tri the triangle elements, when xcohort = F, $tri is an n*(n-1) vector; when xcohort = T, it is an n1\*n2 vector
 }
 \description{
 extract.plink.grm function

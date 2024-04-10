@@ -3,7 +3,7 @@
 \name{deepKin.summary}
 \alias{deepKin.summary}
 \title{deepKin.summary function
-This returns the summary report of deepKin three principles, including the suggested threshold for each degree of relatedness}
+This returns the summary report of deepKin's CRITICAL VALUE of significant relatedness and two guidelines of performing}
 \usage{
 deepKin.summary(deepKin)
 }
@@ -15,7 +15,7 @@ a string
 }
 \description{
 deepKin.summary function
-This returns the summary report of deepKin three principles, including the suggested threshold for each degree of relatedness
+This returns the summary report of deepKin's CRITICAL VALUE of significant relatedness and two guidelines of performing
 }
 \examples{
 \dontrun{deepKin.summary(deepKin)}

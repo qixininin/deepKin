@@ -4,24 +4,33 @@
 \alias{deepKin.estimation}
 \title{deepKin.estimation function}
 \usage{
-deepKin.estimation(grm.diag, grm.tri, xcohort = F, me, pop_size1, pop_size2)
+deepKin.estimation(
+  bfileprefix,
+  plink_path,
+  me,
+  xcohort = F,
+  pop_size1,
+  pop_size2
+)
 }
 \arguments{
-\item{grm.diag}{an n vector}
+\item{bfileprefix}{plink bfile prefix}
 
-\item{grm.tri}{when xcohort = F, grm.tri is an n\*(n-1) vector; when xcohort = T, it is an n1\*n2 vector}
+\item{plink_path}{path to plink executable file}
+
+\item{me}{the effective number of markers}
 
 \item{xcohort}{xcohort = T for cross-cohort GRM extraction; xcohort = F for one cohort GRM;
 Make sure that when you use xcohort = T, the individual order is organized just the same order cohort by cohort.}
-
-\item{me}{the effective number of markers}
 
 \item{pop_size1}{population size for the first cohort when xcohort = T}
 
 \item{pop_size2}{population size for the second cohort when xcohort = T}
 }
 \value{
-deepKin estimates and p-values
+a dataframe with two columns
+        $theta: deepKin estimates
+        $minuslogp: deepKin -log10(p-values)
 }
 \description{
 deepKin.estimation function

@@ -6,7 +6,9 @@
 #' @param pop_size1 population size; population size for the first cohort when xcohort = T
 #' @param pop_size2 population size for the second cohort when xcohort = T
 #'
-#' @return a list $diag the diagnal elements, $tri the triangle elements
+#' @return a list
+#'         $diag the diagnal elements, it is an n vector
+#'         $tri the triangle elements, when xcohort = F, $tri is an n*(n-1) vector; when xcohort = T, it is an n1\*n2 vector
 #' @export
 #'
 #' @examples \dontrun{grm.rst = extract.plink.grm(bfileprefix, xcohort = F, pop_size1 = n)
@@ -17,10 +19,10 @@ extract.plink.grm <- function(bfileprefix, xcohort = F, pop_size1, pop_size2){
   if(!xcohort){  ## single cohort grm calculation
 
     if(!file.exists(paste0(bfileprefix,".rel.bin"))){
-      stop(paste0("Error:", bfileprefix,".rel.bin and .rel.id does not exist!"))
+      stop(paste0("Error extract.plink.grm():", bfileprefix,".rel.bin and .rel.id does not exist!"))
     }
     if(is.null(pop_size1)){
-      stop("Error: pop_size1 is not specified in the within-cohort grm extraction")
+      stop("Error extract.plink.grm(): pop_size1 is not specified in the within-cohort grm extraction")
     }
 
     grm = readBin(paste0(bfileprefix, ".rel.bin"), what="numeric", n=pop_size1*(pop_size1+1)/2, size=4)
@@ -32,11 +34,11 @@ extract.plink.grm <- function(bfileprefix, xcohort = F, pop_size1, pop_size2){
   } else { ## cross-cohort grm calculation
 
     if(!file.exists(paste0(bfileprefix,".rel.bin"))){
-      stop(paste0("Error:", bfileprefix,".rel.bin and .rel.id does not exist!"))
+      stop(paste0("Error extract.plink.grm():", bfileprefix,".rel.bin and .rel.id does not exist!"))
     }
 
     if(is.null(pop_size1) | is.null(pop_size2)){
-      stop("Error: pop_size1 and pop_size2 is not specified in a cross-cohort grm extraction")
+      stop("Error extract.plink.grm(): pop_size1 and pop_size2 is not specified in a cross-cohort grm extraction")
     }
     n = pop_size1 + pop_size2
     grm = readBin(paste0(bfileprefix,".rel.bin"), what="numeric", n=n*(n+1)/2, size=4)
