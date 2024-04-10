@@ -17,25 +17,25 @@ library(deepKin)
 
 - Function **theta.min()**:
 
-The critical value or the deepest relatedness ($\delta$) that the data would support to be detected from unrelated pairs at a given significant level. If we assume a significant level of $\alpha$, the critical value ($\theta_D^\delta$) is    
+The critical value or the deepest relatedness that the data would support to be detected significantly related pairs at a given significant level. If we assume a significant level of $\alpha$, the critical value ($\theta_D^\delta$) is    
 
 $$\theta_D^\delta=z_{1-\alpha}\ \sqrt{2/m_e}$$
 
 - Function **me.min()**:
 
-Guidline I: The minimum number of effective markers is required for detecting the target degree of relatives from unrelated pairs, and it is of economic utility to minimize a budget or industrial application.    
+Guideline I: The minimum number of effective markers is required for detecting the target degree of relatives from unrelated pairs, and it is of economic utility to minimize a budget or industrial application.    
 
 $$m_e \geq 2 \left[ \frac{{z_{1-\alpha} + z_{1-\beta} (1-\theta_D^t)}}{{\theta_D^t}} \right]^2$$
 
 - Function **power.max()**:    
 
-Guidline II: Given the target degree of relatedness, how much of the power ($\pi$) could be compromised or improved.  
+Guideline II: Given the target degree of relatedness, how much of the power ($\pi$) could be compromised or improved.  
 
 $$\pi = 1-\beta = z^{-1} \left( \frac{{\sqrt{\frac{{m_e}}{2}} \theta_D^t - z_{1-\alpha}}}{{1-\theta_D^t}} \right)$$
 
 These three functions are also in-built in the following summary function.    
 
-- Function **deepKin()** allows calculation for all three principles and returns a result list.
+- Function **deepKin()** allows calculation for the critical value and two guidelines, and returns a result list.
 - Function **deepKin.summary()** provides summary of the results.
 ```
 #### Simple examples -----------------------------------------------------------
@@ -62,11 +62,12 @@ abline(h=0.9, col = "blue")
 abline(v=dK$delta, col = "red")
 ```
 
-In a real-world analysis, we provided both relatedness estimation and relatedness inference.    
+In a real-world analysis, we provided more functions on performing both relatedness estimation and relatedness inference.    
+
 The relatedness estimation is based on a moment estimator and required the installation of **plink2**.    
 
 ## Example one
-Example one is an example to conduct deepKin on single dataset, to calculate the n*(n-1)/2 pairs of relatedness scores and perform relatedness inference on all these results.
+Example one is an example to conduct deepKin on a single dataset, to calculate the n*(n-1)/2 pairs of relatedness scores and perform relatedness inference on all these results.
 
 Please prepare plink bfiles - **bfileprefix.bed**, **bfileprefix.bim**, and **bfileprefix.fam**.   
 Please download [GEAR](https://github.com/gc5k/GEAR) if you want to calculate me using biobank-scale data.   
@@ -112,7 +113,7 @@ degree.deep = dK$delta
 ### Step 3 deepKin Estimation
 Once you are ready for performing relatedness estimation, we employed plink2 **--make-rel** command with argument **triangle** and **bin4** to calculate GRM, which will save us a lot of storage, because the result is stored in binary format.    
 
-- Function **deepKin.estimation()**: perform relatedness estimation, based on GRM elements.    
+- Function **deepKin.estimation()**: perform deepKin relatedness estimation based on GRM elements.    
 
 ```
 ## Perform deepKin
@@ -126,7 +127,7 @@ write.table(deepkin, file = paste0(bfileprefix, ".deepkin"), quote = F, col.name
 Perform deepkin inference and classification.   
 Based on the critical value, we are able to perform relatedness classification.    
 
-- Function **deepKin.classification()**: performs relatedness classification, also returns p values for belonging to t or t+1 degrees    
+- Function **deepKin.classification()**: performs relatedness classification, also returns p values for individual pairs belonging to t or t+1 degrees    
 
 - Function **extract.indi.id()**: retrieves individual ID from the original plink.fam file.    
 
